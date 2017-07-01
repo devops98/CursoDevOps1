@@ -3,7 +3,7 @@ data "aws_availability_zones" "available" {}
 provider "aws" {
   access_key = "${var.access_key}"
   secret_key = "${var.secret_key}"
-  region     = "${var.region}"
+  region     = "eu-west-1"
 }
 resource "aws_vpc" "example" {
     cidr_block = "10.8.0.0/20"
@@ -39,7 +39,7 @@ resource "aws_route_table_association" "eu-west-public" {
 
 resource "aws_subnet" "test01" {
     vpc_id            = "${aws_vpc.example.id}"
-    availability_zone = "${var.region}b"
+    availability_zone = "eu-west-1b"
     cidr_block        = "${cidrsubnet(aws_vpc.example.cidr_block, 4, 0)}"
     map_public_ip_on_launch = true
     depends_on = ["aws_internet_gateway.gw"]
@@ -47,7 +47,7 @@ resource "aws_subnet" "test01" {
 
 resource "aws_subnet" "test02" {
     vpc_id            = "${aws_vpc.example.id}"
-    availability_zone = "${var.region}b"
+    availability_zone = "eu-west-1b"
     cidr_block        = "${cidrsubnet(aws_vpc.example.cidr_block, 4, 1)}"
     depends_on = ["aws_internet_gateway.gw"]
 }
